@@ -2342,12 +2342,6 @@ setup.doAttack = function(attackerSheet, victimSheet)
 			setup.addPersistentEffect(victimSheet, attackerFightVariables.currentFightMove.persistentEffectOpponent);
 		}
 
-		var preDamageAbilityParams =
-		{
-			character: victimSheet,
-			attackDamage: attackDamage,
-		};
-
 		if(hitcheck <= thresholdToMiss)
 		{
 			attackDamage = Math.ceil(attackDamage * 1.75); 
@@ -2358,13 +2352,13 @@ setup.doAttack = function(attackerSheet, victimSheet)
 		{
 			if(attackDamage != 0)
 			{
-				attackerFightVariables.currentFightMoveOutcome += setup.triggerVictimPersistentEffects(attackerSheet, victimSheet, "onDamagingHit", preDamageAbilityParams);
+				attackerFightVariables.currentFightMoveOutcome += setup.triggerVictimPersistentEffects(attackerSheet, victimSheet, "onDamagingHit", onDoAttackabilityParams);
 			}
-		}
+        }
 
 		attackerFightVariables.currentFightMoveOutcome += setup.triggerVictimPersistentEffects(attackerSheet, victimSheet, "onReceivingHit", onDoAttackabilityParams);
 
-		attackDamage = Math.ceil(attackDamage * onDoAttackabilityParams.finalDamageModifier);
+		attackDamage = Math.ceil(onDoAttackabilityParams.attackDamage * onDoAttackabilityParams.finalDamageModifier);
 			
 
 		if(attackDamage != 0)
@@ -10805,7 +10799,7 @@ Config.history.controls = false;
 					&quot;Your @[1|hands|noverb] hurtles toward the lost, but he dives and angles for your mighty @[all|cocks|noverb]. Although injured, he grabs onto his target&quot;+
 					&quot; and shoves his dick into your urethra. Black cum erupts into your shaft and spreads across the insides of it. &quot;+
 					&quot;Suddenly, an immense feeling of arousal shakes you to your core as the beast&#39;s corrupting goo quickly slithers into your ballsack. &quot;+
-					&quot;\n\nYour eyes open wide with renewed vigour and you shove the beast down to the ground. You press his body into the sand with one @[1|hand|noverb].&quot;
+					&quot;\n\nYour eyes open wide with renewed vigour and you shove the beast down to the ground. You press his body into the sand with one @[1|hands|noverb].&quot;
 				],
 				huge: [
 					&quot;Your @[1|hands|noverb] hurtle toward the lost, but he dives and angles for your @[all|cocks|noverb]. Although injured, he grabs onto his target&quot;+
