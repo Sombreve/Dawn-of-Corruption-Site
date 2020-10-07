@@ -1722,7 +1722,7 @@ setup.resetComboableFightMoveList = function()
     State.variables.ComboableMovesChoices = undefined;
     for(let i = 0; i < movelist.length; ++i)
     {
-        movelist.chosen = false;
+        movelist[i].chosen = false;
     }
 }
 
@@ -15240,7 +15240,8 @@ maxRank: 1
     }
 )&gt;&gt;
 
-&lt;&lt;run $Ability_ToLiveForEcho.setUnlockableFromLevelScreen(true)&gt;&gt;
+/*This breaks in 0.4.0*/
+/*&lt;&lt;run $Ability_ToLiveForEcho.setUnlockableFromLevelScreen(true)&gt;&gt;*/
 
 &lt;&lt;run $Ability_ToLiveForEcho.setUnlockCondition(
     function(character){
@@ -20612,7 +20613,8 @@ Abilities
 [[Learn Oath of Containment-&gt;DebugMenu][$CharacterSheet_Player.applyAbilityRuntimeData($Ability_Oath_Containment)]]
 [[Learn Orgasmic Growth-&gt;DebugMenu][$CharacterSheet_Player.applyAbilityRuntimeData($Ability_OrgasmicGrowth)]]
 [[Learn Last Stand-&gt;DebugMenu][$CharacterSheet_Player.applyAbilityRuntimeData($Ability_LastStand)]]
-[[Learn To Live For Echo-&gt;DebugMenu][$CharacterSheet_Player.applyAbilityRuntimeData($Ability_ToLiveForEcho)]]
+/*This breaks in 0.4.0*/
+/*[[Learn To Live For Echo-&gt;DebugMenu][$CharacterSheet_Player.applyAbilityRuntimeData($Ability_ToLiveForEcho)]]*/
 [[Learn Warrior of Duality-&gt;DebugMenu][$CharacterSheet_Player.applyAbilityRuntimeData($Ability_WarriorOfDuality)]]
 [[Learn Codex&#39;s Passion-&gt;DebugMenu][$CharacterSheet_Player.applyAbilityRuntimeData($Ability_CodexPassion)]]
 [[Learn Under The Eye Of Ortha-&gt;DebugMenu][$CharacterSheet_Player.applyAbilityRuntimeData($Ability_UnderTheEyeOfOrtha)]]
