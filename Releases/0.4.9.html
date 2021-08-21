@@ -2361,9 +2361,71 @@ setup.hasModifier = function(character, name)
     return false;
 };
 
+setup.displayLevelUpFightMove = function()
+{
+    var levelUpFightMove = setup.getLevelUpFightMove(State.variables.CharacterSheet_Player);
+    if(levelUpFightMove != "")
+    {
+        return '<h2>'+State.variables.CharacterSheet_Player.symbiote.name+ '\'s power grows... You will unlock the "'+setup[levelUpFightMove].name+'" Fight Move! </h2>';
+    }
+
+    return "";
+}
+
+setup.hasFightMove = function(character, fightMoveID)
+{
+    var fightMoves = setup.getFightMovesWithAddons(character);
+    console.log("fightMoves")
+    console.log(fightMoves)
+    
+    for(let i = 0; i < fightMoves.length; i++) 
+    {
+        if(fightMoves[i] == fightMoveID)
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+setup.getLevelUpFightMove = function(character)
+{
+    if(!character.hasAbility("Ability_HostOfEcho"))
+    {
+        return "";
+    }
+    
+    if(State.variables.Level >= 5 && !setup.hasFightMove(character, setup.FightMove_Sigil_Growth.id))
+    {
+        return setup.FightMove_Sigil_Growth.id;
+    }
+    else if(State.variables.Level >= 4 && !setup.hasFightMove(character, setup.FightMove_Sigil_Pain.id))
+    {
+        return setup.FightMove_Sigil_Pain.id;
+    }
+    else if(State.variables.Level >= 3 && !setup.hasFightMove(character, setup.FightMove_Sigil_Vitality.id))
+    {
+        return setup.FightMove_Sigil_Vitality.id;
+    }
+
+    return "";
+}
+
 setup.levelUp = function(character, levelUpParams, abilityChoiceIndex)
 {
     State.variables.Level++;
+
+    
+    var levelUpFightMove = setup.getLevelUpFightMove(State.variables.CharacterSheet_Player);
+    if(levelUpFightMove != "")
+    {
+        var move = setup[levelUpFightMove];
+        if(move)
+        {
+            character.fight.fightMoveIDs.push(move.id);
+        }
+    }
 
     setup.setBaseStatValue(character, "hp", levelUpParams.hp.value);
     setup.setBaseStatValue(character, "stamina", levelUpParams.stamina.value);
@@ -10786,7 +10848,6 @@ for(i = 0; i &lt; State.variables.CharacterSheet_Player.fight.fightMoveIDs.lengt
 
 &lt;&lt;set setup.QuestSheet_Imp =
 {
-    met: false
     met: false,
     storylineProgress: setup.StorylineProgress_Imp.FIRST_MEETING,
     relationshipScoring: 0,
@@ -10924,6 +10985,14 @@ for(i = 0; i &lt; State.variables.CharacterSheet_Player.fight.fightMoveIDs.lengt
 }&gt;&gt;
 
 &lt;&lt;set $CharacterSheet_Imp.quest = setup.QuestSheet_Imp&gt;&gt;
+
+&lt;&lt;/if&gt;&gt;
+
+&lt;&lt;if $Version &gt;= 10409 &amp;&amp; $Version &lt; 10409.1&gt;&gt;
+&lt;&lt;set $Version = 10409.1&gt;&gt;
+&lt;&lt;set $VersionStr = &#39;0.4.9&#39;&gt;&gt;
+
+&lt;&lt;set $EasyRandomEncounters = [&quot;CharacterSheet_Imp&quot;, &quot;CharacterSheet_Slime&quot;]&gt;&gt;
 
 &lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="3" name="PassageReady" tags="" position="350,100" size="100,100">&lt;meta name=&quot;viewport&quot; content=&quot;width=1024&quot;&gt;</tw-passagedata><tw-passagedata pid="4" name="StoryInit" tags="" position="161,1322" size="100,100">&lt;&lt;include StoryInit_Base&gt;&gt;
 &lt;&lt;include StoryInit_Widgets&gt;&gt;
@@ -11081,7 +11150,7 @@ Config.history.controls = false;
 Config.ui.stowBarInitially = false;
 &lt;&lt;/script&gt;&gt;
 
-&lt;&lt;set $Version = 10409&gt;&gt;
+&lt;&lt;set $Version = 10409.1&gt;&gt;
 &lt;&lt;set $VersionStr = &#39;0.4.9&#39;&gt;&gt;
 
 &lt;&lt;set setup.FightHotkeys = [&quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,&quot;5&quot;,&quot;6&quot;,&quot;7&quot;,&quot;8&quot;,&quot;9&quot;,&quot;0&quot;,&quot;Q&quot;,&quot;W&quot;,&quot;E&quot;,&quot;R&quot;,&quot;T&quot;,&quot;Y&quot;,&quot;U&quot;,&quot;I&quot;,&quot;O&quot;,&quot;P&quot;]&gt;&gt;
@@ -12232,7 +12301,7 @@ Config.ui.stowBarInitially = false;
 
 /*debug*/
 /*&lt;&lt;set $Quest_InProgress = [$Quest_MQ002]&gt;&gt;*/
-&lt;&lt;set $Quest_InProgress = []&gt;&gt;</tw-passagedata><tw-passagedata pid="12" name="StoryInit_RandomEncounters" tags="" position="225,225" size="100,100">&lt;&lt;set $EasyRandomEncounters = [&quot;CharacterSheet_Imp&quot;, &quot;CharacterSheet_Tok&quot;, &quot;CharacterSheet_Slime&quot;]&gt;&gt;
+&lt;&lt;set $Quest_InProgress = []&gt;&gt;</tw-passagedata><tw-passagedata pid="12" name="StoryInit_RandomEncounters" tags="" position="225,225" size="100,100">&lt;&lt;set $EasyRandomEncounters = [&quot;CharacterSheet_Imp&quot;, &quot;CharacterSheet_Slime&quot;]&gt;&gt;
 &lt;&lt;set $MediumRandomEncounters = [&quot;CharacterSheet_Lakkos&quot;, &quot;CharacterSheet_Lost_Entity&quot;, &quot;CharacterSheet_Lost_Naga&quot;]&gt;&gt;</tw-passagedata><tw-passagedata pid="13" name="StoryInit_SpecialMoves" tags="" position="350,225" size="100,100">&lt;&lt;set setup.FightMove_Stunned =
 {
 	id: &quot;FightMove_Stunned&quot;,
@@ -28465,7 +28534,6 @@ Transform Symbiote Race to \
 
 Start Encounter
 [[Imp-&gt;DebugEncounter][$DebugEncounter = &quot;CharacterSheet_Imp&quot;]]
-[[Tok-&gt;DebugEncounter][$DebugEncounter = &quot;CharacterSheet_Tok&quot;]]
 [[Lakkos-&gt;DebugEncounter][$DebugEncounter = &quot;CharacterSheet_Lakkos&quot;]]
 [[Lost Entity-&gt;DebugEncounter][$DebugEncounter = &quot;CharacterSheet_Lost_Entity&quot;]]
 [[Lost Swarm-&gt;Encounter_Intro_Swarm]]
@@ -28505,11 +28573,6 @@ Enemy Size Mods
 [[Turn Imp Human Sized-&gt;DebugMenu][setup.debug_SetHeight($CharacterSheet_Imp, setup.Comparators.EQUAL)]]
 [[Turn Imp Massive-&gt;DebugMenu][setup.debug_SetHeight($CharacterSheet_Imp, setup.Comparators.REACHES_WAIST)]]
 [[Turn Imp Macro-&gt;DebugMenu][setup.debug_SetHeight($CharacterSheet_Imp, setup.Comparators.REACHES_KNEES)]]
-
-[[Turn Tok Small-&gt;DebugMenu][setup.debug_SetHeight($CharacterSheet_Tok, setup.Comparators.SMALLER)]]
-[[Turn Tok Human Sized-&gt;DebugMenu][setup.debug_SetHeight($CharacterSheet_Tok, setup.Comparators.EQUAL)]]
-[[Turn Tok Massive-&gt;DebugMenu][setup.debug_SetHeight($CharacterSheet_Tok, setup.Comparators.REACHES_WAIST)]]
-[[Turn Tok Macro-&gt;DebugMenu][setup.debug_SetHeight($CharacterSheet_Tok, setup.Comparators.REACHES_KNEES)]]
 
 [[Turn Lakkos Small-&gt;DebugMenu][setup.debug_SetHeight($CharacterSheet_Lakkos, setup.Comparators.SMALLER)]]
 [[Turn Lakkos Human Sized-&gt;DebugMenu][setup.debug_SetHeight($CharacterSheet_Lakkos, setup.Comparators.EQUAL)]]
@@ -28608,6 +28671,7 @@ It is known to shape how the world is seen and felt.
 }&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;
 &lt;h1&gt;With experience, power builds within you.&lt;/h1&gt;
+\&lt;&lt;print setup.displayLevelUpFightMove($CharacterSheet_Player)&gt;&gt;
 
 You can increase your Stats &lt;span id=&quot;LevelUp-Points&quot;&gt;&lt;&lt;print $LevelUpParams.point&gt;&gt; &lt;/span&gt; times.
 
