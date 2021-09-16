@@ -11506,16 +11506,6 @@ for(i = 0; i &lt; State.variables.CharacterSheet_Player.fight.fightMoveIDs.lengt
 &lt;&lt;set $EasyRandomEncounters = [&quot;CharacterSheet_Slime&quot;]&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 
-&lt;&lt;if $Version &gt;= 10500.1 &amp;&amp; $Version &lt; 10500.2&gt;&gt;
-&lt;&lt;set $Version = 10500.2&gt;&gt;
-&lt;&lt;set $VersionStr = &#39;0.5.0*&#39;&gt;&gt;
-
-&lt;&lt;if $CharacterSheet_Player.fight.teammate == undefined&gt;&gt;
-&lt;&lt;set $EasyRandomEncounters = [&quot;CharacterSheet_Imp&quot;, &quot;CharacterSheet_Slime&quot;]&gt;&gt;
-&lt;&lt;else&gt;&gt;
-&lt;&lt;set $EasyRandomEncounters = [&quot;CharacterSheet_Slime&quot;]&gt;&gt;
-&lt;&lt;/if&gt;&gt;
-
 &lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="3" name="PassageReady" tags="" position="350,100" size="100,100">&lt;meta name=&quot;viewport&quot; content=&quot;width=1024&quot;&gt;</tw-passagedata><tw-passagedata pid="4" name="StoryInit" tags="" position="161,1322" size="100,100">&lt;&lt;include StoryInit_Base&gt;&gt;
 &lt;&lt;include StoryInit_Widgets&gt;&gt;
 &lt;&lt;include StoryInit_UniversalFlavour&gt;&gt;
@@ -11679,7 +11669,7 @@ Config.history.controls = false;
 Config.ui.stowBarInitially = false;
 &lt;&lt;/script&gt;&gt;
 
-&lt;&lt;set $Version = 10500.2&gt;&gt;
+&lt;&lt;set $Version = 10500.1&gt;&gt;
 &lt;&lt;set $VersionStr = &#39;0.5.0&#39;&gt;&gt;
 
 &lt;&lt;set setup.FightHotkeys = [&quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,&quot;5&quot;,&quot;6&quot;,&quot;7&quot;,&quot;8&quot;,&quot;9&quot;,&quot;0&quot;,&quot;Q&quot;,&quot;W&quot;,&quot;E&quot;,&quot;R&quot;,&quot;T&quot;,&quot;Y&quot;,&quot;U&quot;,&quot;I&quot;,&quot;O&quot;,&quot;P&quot;]&gt;&gt;
